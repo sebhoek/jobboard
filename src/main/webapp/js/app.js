@@ -1,7 +1,7 @@
 
 var model = {};
 
-model.runs = {};
+model.runs = [];
 
 model.pendingCalls = 0;
 
@@ -20,6 +20,31 @@ model.notifyCallCompleted = function() {
 	}
 }
 
+model.showJob = function(run, leftBorderTs, rightBorderTs, lanediv) {
+
+	console.log("updateView "+run.label+" "+lanediv);
+	
+	var totalWidth = $('div.jobs').width();
+	
+	var left = (run.from-leftBorderTs)*totalWidth / (rightBorderTs-leftBorderTs);
+	var width = (run.to-run.from)*totalWidth / (rightBorderTs-leftBorderTs);
+	if (width<5) {
+		width=5;
+	}
+	
+	$('<div/>', {
+		"class": "job",
+		html: run.label
+	})
+		.css("left", left)
+		.css("width", width)
+		.addClass("job-"+run.result)
+		.attr("title", run.label + ", "+new Date(run.from).toLocaleTimeString()+", took "+(run.to-run.from)+"ms)")
+		.tooltip()
+		.appendTo(lanediv);
+	
+}
+
 model.updateView = function() {
 
 	console.log("updateView");
@@ -29,26 +54,42 @@ model.updateView = function() {
 	var rightBorderTs = new Date().getTime();
 	var leftBorderTs = rightBorderTs - displayedTimeInMillies;
 
-	$.each(this.runs, function(lane, runsperlane) {
-
-		$.each(runsperlane, function(i, run) {
-			showJob(run, leftBorderTs, rightBorderTs);
-		});
-
+	this.runs.sort(function(run1,run2) {
+		return run1.lane < run2.lane;
+	})
+	var laneindex = 0;
+	var lane = '';
+	var laneclass = '';
+	var _this = this;
+	
+	$.each(this.runs, function(i, run) {
+		if (run.lane != lane) {
+			
+			if (laneindex > 0) {
+				$('<div/>', { "class": "job-clear" }).appendTo('div.'+laneclass);
+			}
+			
+			laneindex++;
+			lane = run.lane;
+			laneclass = 'lane-'+laneindex;				
+			
+			$('<div/>', {
+				"class": "lane",
+			})
+				.addClass(laneclass)
+				.attr("title", run.lane)
+				.tooltip()
+				.appendTo('div.jobs');
+		}
+		
+		_this.showJob(run, leftBorderTs, rightBorderTs, 'div.'+laneclass);
 	});
+	$('<div/>', { "class": "job-clear" }).appendTo('div.'+laneclass);
 	
 }
 
 model.addRun = function(lane, run) {
-	
-	if (lane == undefined) {
-		lane = "default";
-	}
-	
-	if (this.runs[lane] == undefined) {
-		this.runs[lane] = [];
-	}
-	this.runs[lane].push(run);
+	this.runs.push(run);
 }
 
 var queryRunDetails = function(job, buildNumber) {
@@ -61,9 +102,11 @@ var queryRunDetails = function(job, buildNumber) {
 				var run = {
 					to: (data.timestamp + data.duration),
 					from: data.timestamp,
+					job: job.name,
 					label: job.name + '#' + buildNumber,
 					result: data.result,
-					executor: data.executor
+					executor: data.executor,
+					lane: job.name
 				}
 				model.addRun(run.executor, run);
 				if (buildNumber > 1) {
@@ -97,30 +140,6 @@ var queryJobs = function() {
 			queryJobDetails(job);
 		})
 	});
-}
-
-
-var showJob = function(run, leftBorderTs, rightBorderTs) {
-	
-	var totalWidth = $('div.jobs').width();
-	
-	var left = (run.from-leftBorderTs)*totalWidth / (rightBorderTs-leftBorderTs);
-	var width = (run.to-run.from)*totalWidth / (rightBorderTs-leftBorderTs);
-	if (width<10) {
-		width=10;
-	}
-	
-	$('<div/>', {
-		"class": "job",
-		html: run.label
-	})
-		.css("left", left)
-		.css("width", width)
-		.addClass("job-"+run.result)
-		.attr("title", run.label + ", "+new Date(run.from).toLocaleTimeString()+", took "+(run.to-run.from)+"ms)")
-		.tooltip()
-		.appendTo('div.jobs');
-	
 }
 
 $(document).ready(function(){

@@ -16,18 +16,31 @@ h1 {
 }
 
 .job {
+	float:left;
 	position:relative;
 	padding-top: 20px;
 	padding-bottom: 20px;
 	overflow:hidden;
 }
 
+.job-clear {
+	clear:both;
+}
+
+.lane {
+	padding: 10px 10px 10px 10px;
+	margin-bottom: 10px;
+	background-color: #eeeeee;
+}
+
 .job-FAILURE {
+	border: 1px solid #ffffff;
 	background-color: #ee3300;
 	
 }
 
 .job-SUCCESS {
+	border: 1px solid #ffffff;
 	background-color: #66cc66;
 	
 }
