@@ -117,7 +117,7 @@ var showJob = function(run, leftBorderTs, rightBorderTs) {
 		.css("left", left)
 		.css("width", width)
 		.addClass("job-"+run.result)
-		.attr("title", run.label + ", "+new Date(run.from).toLocaleTimeString()+", took "+new Date(run.to-run.from).toTimeString()+")")
+		.attr("title", run.label + ", "+new Date(run.from).toLocaleTimeString()+", took "+(run.to-run.from)+"ms)")
 		.tooltip()
 		.appendTo('div.jobs');
 	
