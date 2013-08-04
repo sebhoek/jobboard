@@ -55,10 +55,8 @@ var queryRunDetails = function(job, buildNumber) {
 
 	model.beforeCall();
 	
-	$.ajax({
-		dataType: "jsonp",
-		url: jenkinsBaseUrl + '/job/' + job.name + '/' + buildNumber + '/api/json', 
-		success: function(data) {
+	$.getJSON(jenkinsBaseUrl + '/job/' + job.name + '/' + buildNumber + '/api/json', 
+		function(data) {
 			if ((data.timestamp + data.duration) > (new Date().getTime()-displayedTimeInMillies)) {
 				var run = {
 					to: (data.timestamp + data.duration),
@@ -72,57 +70,33 @@ var queryRunDetails = function(job, buildNumber) {
 					queryRunDetails(job, buildNumber - 1);
 				}
 			}
-		},
-		complete: function() { 
-			console.log("queryRunDetails complete");
-			model.notifyCallCompleted();
 		}
-	});
+	)
+	.complete(
+		function() { 
+		console.log("queryRunDetails complete");
+		model.notifyCallCompleted();
+	})
 	
 }
 
 var queryJobDetails = function (job) {
 	
-	$.ajax({
-		dataType: "jsonp",
-		url: jenkinsBaseUrl + '/job/' + job.name + '/api/json', 
-		success: function(data) {
+	$.getJSON(jenkinsBaseUrl + '/job/' + job.name + '/api/json', 
+		function(data) {
 			queryRunDetails(job, data.lastBuild.number);
 		}
-	});
+	);
 	
 }
 
 var queryJobs = function() {
 
-	$.getJSON('http://localhost:8080/api/json?jsonp=?', {
-	    tags: "jquery",
-	    tagmode: "any",
-	    format: "json"
-	}, function (data) {
-		alert('success');
+	$.getJSON(jenkinsBaseUrl + '/api/json', function (data) {
+		$.each(data.jobs, function(i, job) {
+			queryJobDetails(job);
+		})
 	});
-	
-//	$.ajax({
-//		dataType: "jsonp",
-//		url: jenkinsBaseUrl + '/api/json',
-//		jsonp: "jsonp",
-//		ajaxSuccess: function(data) {
-//			alert("success")
-//			$.each(data.jobs, function(i, job) {
-//				queryJobDetails(job);
-//			})
-//		},
-//		complete: function(data) {
-//			alert("complete "+data)
-//			$.each(data, function(k, v) {
-//				console.log(k+":"+v);
-//			})
-//		}
-//	});
-	
-
-	
 }
 
 
