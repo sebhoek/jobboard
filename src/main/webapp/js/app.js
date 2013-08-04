@@ -24,7 +24,7 @@ model.showJob = function(run, leftBorderTs, rightBorderTs, lanediv) {
 
 	console.log("updateView "+run.label+" "+lanediv);
 	
-	var totalWidth = $('div.jobs').width();
+	var totalWidth = $('div.jobs').width()-20;
 	
 	var left = (run.from-leftBorderTs)*totalWidth / (rightBorderTs-leftBorderTs);
 	var width = (run.to-run.from)*totalWidth / (rightBorderTs-leftBorderTs);
