@@ -1,0 +1,38 @@
+{
+  "actions" : [
+    {
+      "causes" : [
+        {
+          "shortDescription" : "Started by user anonymous",
+          "userId" : null,
+          "userName" : "anonymous"
+        }
+      ]
+    }
+  ],
+  "artifacts" : [
+    
+  ],
+  "building" : false,
+  "description" : null,
+  "duration" : 81056,
+  "estimatedDuration" : -1,
+  "executor" : null,
+  "fullDisplayName" : "Long.Build.That.Fails #1",
+  "id" : "2013-08-04_09-05-26",
+  "keepLog" : false,
+  "number" : 1,
+  "result" : "FAILURE",
+  "timestamp" : 1375599926377,
+  "url" : "http://localhost:8080/job/Long.Build.That.Fails/1/",
+  "builtOn" : "",
+  "changeSet" : {
+    "items" : [
+      
+    ],
+    "kind" : null
+  },
+  "culprits" : [
+    
+  ]
+}

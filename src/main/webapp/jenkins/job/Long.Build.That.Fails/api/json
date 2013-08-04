@@ -1,0 +1,65 @@
+{
+  "actions" : [
+    
+  ],
+  "description" : "",
+  "displayName" : "Long.Build.That.Fails",
+  "displayNameOrNull" : null,
+  "name" : "Long.Build.That.Fails",
+  "url" : "http://localhost:8080/job/Long.Build.That.Fails/",
+  "buildable" : true,
+  "builds" : [
+    {
+      "number" : 1,
+      "url" : "http://localhost:8080/job/Long.Build.That.Fails/1/"
+    }
+  ],
+  "color" : "red",
+  "firstBuild" : {
+    "number" : 1,
+    "url" : "http://localhost:8080/job/Long.Build.That.Fails/1/"
+  },
+  "healthReport" : [
+    {
+      "description" : "Build stability: All recent builds failed.",
+      "iconUrl" : "health-00to19.png",
+      "score" : 0
+    }
+  ],
+  "inQueue" : false,
+  "keepDependencies" : false,
+  "lastBuild" : {
+    "number" : 1,
+    "url" : "http://localhost:8080/job/Long.Build.That.Fails/1/"
+  },
+  "lastCompletedBuild" : {
+    "number" : 1,
+    "url" : "http://localhost:8080/job/Long.Build.That.Fails/1/"
+  },
+  "lastFailedBuild" : {
+    "number" : 1,
+    "url" : "http://localhost:8080/job/Long.Build.That.Fails/1/"
+  },
+  "lastStableBuild" : null,
+  "lastSuccessfulBuild" : null,
+  "lastUnstableBuild" : null,
+  "lastUnsuccessfulBuild" : {
+    "number" : 1,
+    "url" : "http://localhost:8080/job/Long.Build.That.Fails/1/"
+  },
+  "nextBuildNumber" : 2,
+  "property" : [
+    
+  ],
+  "queueItem" : null,
+  "concurrentBuild" : true,
+  "downstreamProjects" : [
+    
+  ],
+  "scm" : {
+    
+  },
+  "upstreamProjects" : [
+    
+  ]
+}
