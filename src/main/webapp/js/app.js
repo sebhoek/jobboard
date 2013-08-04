@@ -106,6 +106,9 @@ var showJob = function(run, leftBorderTs, rightBorderTs) {
 	
 	var left = (run.from-leftBorderTs)*totalWidth / (rightBorderTs-leftBorderTs);
 	var width = (run.to-run.from)*totalWidth / (rightBorderTs-leftBorderTs);
+	if (width<10) {
+		width=10;
+	}
 	
 	$('<div/>', {
 		"class": "job",
